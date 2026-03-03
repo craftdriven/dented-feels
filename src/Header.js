@@ -12,9 +12,16 @@ const Header = () => {
   const { account, activateBrowserWallet } = useEthers()
   
   const handleConnect = async () => {
-    if (!account) {
+    if (account) {
+      toast.info('Wallet already connected.')
+      return
+    }
+
+    try {
       await activateBrowserWallet()
-      toast.success('Connected Successfully!')
+      toast.success('Connected successfully!')
+    } catch (error) {
+      toast.error('Wallet connection was cancelled.')
     }
   }
 
